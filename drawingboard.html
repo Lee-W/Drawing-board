@@ -9,7 +9,8 @@
 
 <body>
 <div id="canvasDiv">
-	<canvas id="drawingBoard" onmousedown="canvasMouseDown()" onmousemove="canvasMouseMove()" onmouseup="canvasMouseUp()" onmouseout="canvasMouseLeave()"></canvas>
+	<canvas id="drawingBoard" width="800" height="600"></canvas>
+	<input type="button" id="clearcanvas" value="clear">
 </div>
 
 <script type="text/javascript">
@@ -28,10 +29,11 @@
 	function redraw(){
 		context.clearRect(0,0,context.canvas.width,context.canvas.height);
 		context.lineJoin="round";
+		context.lineCap="round";
 		context.lineWidth=1;
 		for(var i=0;i<clickCounter.length;i++){
 			context.beginPath();
-			if(i)
+			if(i&&clickCounter[i])
 				context.moveTo(clickX[i-1],clickY[i-1]);
 			else
 				context.moveTo(clickX[i],clickY[i]);
@@ -42,29 +44,33 @@
 		}
 	}
 
-	function canvasMouseDown(){
+	drawingBoard.onmousedown=function canvasMouseDown(){
 		paint=true;
-		addClick(event.clientX,event.clientY,true);
+		addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,false);
 		redraw();
 	}
 	
-	function canvasMouseMove(){
+	drawingBoard.onmousemove=function canvasMouseMove(){
 		if(paint){
-			addClick(event.clientX,event.clientY,true);
+			addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,true);
 			redraw();
 		}
 	}
 
-	function canvasMouseUp(){
+	drawingBoard.onmouseup=function canvasMouseUp(){
 		paint=false;
 	}
 
-	function canvasMouseLeave(){
+	drawingBoard.onmouseout=function canvasMouseLeave(){
 		paint=false;
 	}
 
-
-
+	clearcanvas.onclick=function clearcanvas(){
+		clickX=[];
+		clickY=[];
+		clickCounter=[];
+		redraw();
+	}
 
 
 </script>	
