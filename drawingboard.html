@@ -1,7 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+<meta charset="utf-8">
+<title>Drawing-board</title>
+<link rel=stylesheet type="text/css" href="drawingboard.css">
 </head>
+
 <body>
+<div id="canvasDiv">
+	<canvas id="drawingBoard" onmousedown="canvasMouseDown()" onmousemove="canvasMouseMove()" onmouseup="canvasMouseUp()" onmouseout="canvasMouseLeave()"></canvas>
+</div>
+
+<script type="text/javascript">
+	context=document.getElementById('drawingBoard').getContext("2d");
+	var clickX=new Array();
+	var clickY=new Array();
+	var clickCounter=new Array();
+	var paint;
+
+	function addClick(x,y,counter){
+		clickX.push(x);
+		clickY.push(y);
+		clickCounter.push(counter);
+	}
+
+	function redraw(){
+		context.clearRect(0,0,context.canvas.width,context.canvas.height);
+		context.lineJoin="round";
+		context.lineWidth=1;
+		for(var i=0;i<clickCounter.length;i++){
+			context.beginPath();
+			if(i)
+				context.moveTo(clickX[i-1],clickY[i-1]);
+			else
+				context.moveTo(clickX[i],clickY[i]);
+				
+			context.lineTo(clickX[i],clickY[i]);
+			context.closePath();
+			context.stroke();
+		}
+	}
+
+	function canvasMouseDown(){
+		paint=true;
+		addClick(event.clientX,event.clientY,true);
+		redraw();
+	}
+	
+	function canvasMouseMove(){
+		if(paint){
+			addClick(event.clientX,event.clientY,true);
+			redraw();
+		}
+	}
+
+	function canvasMouseUp(){
+		paint=false;
+	}
+
+	function canvasMouseLeave(){
+		paint=false;
+	}
+
+
+
+
+
+</script>	
 </body>
+
 </html>
