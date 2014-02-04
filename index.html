@@ -13,6 +13,8 @@
 	<input type="button" id="clearcanvas" value="clear">
 </div>
 
+<a href="https://github.com/Lee-W/Drawing-board"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
 <script type="text/javascript">
 	context=document.getElementById('drawingBoard').getContext("2d");
 	var clickX=new Array();
@@ -37,7 +39,7 @@
 				context.moveTo(clickX[i-1],clickY[i-1]);
 			else
 				context.moveTo(clickX[i],clickY[i]);
-				
+
 			context.lineTo(clickX[i],clickY[i]);
 			context.closePath();
 			context.stroke();
@@ -49,7 +51,7 @@
 		addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,false);
 		redraw();
 	}
-	
+
 	drawingBoard.onmousemove=function canvasMouseMove(event){
 		if(paint){
 			addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,true);
@@ -73,7 +75,7 @@
 	}
 
 
-</script>	
+</script>
 </body>
 
 </html>
