@@ -44,13 +44,13 @@
 		}
 	}
 
-	drawingBoard.onmousedown=function canvasMouseDown(){
+	drawingBoard.onmousedown=function canvasMouseDown(event){
 		paint=true;
 		addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,false);
 		redraw();
 	}
 	
-	drawingBoard.onmousemove=function canvasMouseMove(){
+	drawingBoard.onmousemove=function canvasMouseMove(event){
 		if(paint){
 			addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,true);
 			redraw();
