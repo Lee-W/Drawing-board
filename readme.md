@@ -12,5 +12,3 @@ A website that allow you to draw simple pictures and export them.
 
 #Error
 -firefox下有問題（chrome可）
--畫筆沒有與滑鼠重合
--劃線不會斷開
