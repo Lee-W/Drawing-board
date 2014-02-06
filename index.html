@@ -10,6 +10,12 @@
 <body>
 <div id="canvasDiv">
 	<canvas id="drawingBoard" width="800" height="600"></canvas>
+</div>
+<div id="toolBox">
+  <label for="brush-size">Brush size:</label>
+  <input type="number" id="brush-size" min="1" value="10" /><br>
+	<label for="brush-color">Brush color:</label>
+	<input type="color" id="brush-color" /><br>
 	<input type="button" id="clearcanvas" value="clear">
 </div>
 
@@ -20,12 +26,16 @@
 	var clickX=new Array();
 	var clickY=new Array();
 	var clickCounter=new Array();
+	var brushSize = new Array();
+	var brushColor = new Array();;
 	var paint;
 
 	function addClick(x,y,counter){
 		clickX.push(x);
 		clickY.push(y);
 		clickCounter.push(counter);
+		brushSize.push(document.getElementById('brush-size').value);
+		brushColor.push(document.getElementById('brush-color').value);
 	}
 
 	function redraw(){
@@ -42,19 +52,25 @@
 
 			context.lineTo(clickX[i],clickY[i]);
 			context.closePath();
+			context.lineWidth = brushSize[i];
+			context.strokeStyle = brushColor[i];
 			context.stroke();
 		}
 	}
 
 	drawingBoard.onmousedown=function canvasMouseDown(event){
 		paint=true;
-		addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,false);
+		addClick(event.clientX-context.canvas.offsetLeft + window.pageXOffset,
+		         event.clientY-context.canvas.offsetTop + window.pageYOffset,
+		         false);
 		redraw();
 	}
 
 	drawingBoard.onmousemove=function canvasMouseMove(event){
 		if(paint){
-			addClick(event.clientX-context.canvas.offsetLeft,event.clientY-context.canvas.offsetTop,true);
+			addClick(event.clientX-context.canvas.offsetLeft + window.pageXOffset,
+			         event.clientY-context.canvas.offsetTop + window.pageYOffset,
+			         true);
 			redraw();
 		}
 	}
@@ -71,6 +87,8 @@
 		clickX=[];
 		clickY=[];
 		clickCounter=[];
+		brushSize = [];
+		brushColor = [];
 		redraw();
 	}
 
