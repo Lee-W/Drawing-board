@@ -12,17 +12,23 @@
 	<canvas id="drawingBoard" width="800" height="600"></canvas>
 </div>
 <div id="toolBox">
-  <label for="brush-size">Brush size:</label>
-  <input type="number" id="brush-size" min="1" value="10" /><br>
+    <label for="brush-size">Brush size:</label>
+    <input type="number" id="brush-size" min="1" value="10" /><br>
+
 	<label for="brush-color">Brush color:</label>
 	<input type="color" id="brush-color" /><br>
-	<input type="button" id="clearcanvas" value="clear">
+
+	<input type="button" id="clearcanvas" value="clear"><br>
+
+    <a href="#" download="dl.png" onclick="this.href=canvas.toDataURL();" ><button>save</button></a>
 </div>
+
 
 <a href="https://github.com/Lee-W/Drawing-board"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
 
 <script type="text/javascript">
-	context=document.getElementById('drawingBoard').getContext("2d");
+	var canvas=document.getElementById('drawingBoard');
+    var context=canvas.getContext("2d");
 	var clickX=new Array();
 	var clickY=new Array();
 	var clickCounter=new Array();
@@ -92,8 +98,12 @@
 		redraw();
 	}
 
-
+    //for save the image
+    var image = document.getElementById('image');
+    image = canvas.toDataURL('image/jpeg');
 </script>
+
+
 </body>
 
 </html>
