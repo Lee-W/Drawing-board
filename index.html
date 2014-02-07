@@ -12,12 +12,15 @@
 	<canvas id="drawingBoard" width="800" height="600"></canvas>
 </div>
 <div id="toolBox">
-    <label for="brush-size">Brush size:</label>
-    <input type="range" id="brush-size-slider" min="1" max="200" step="1" value="10" />
-    <input type="number" id="brush-size" min="1" max="999" value="10" /><br>
+  <label for="brush-size">Brush size:</label>
+  <input type="range" id="brush-size-slider" min="1" max="200" step="1" value="10" />
+  <input type="number" id="brush-size" min="1" max="999" value="10" /><br>
 
 	<label for="brush-color">Brush color:</label>
-	<input type="color" id="brush-color" /><br>
+	<input type="color" id="brush-color" value="#000000" /><br>
+
+  <label for="canvas-color">Canvas color:</label>
+  <input type="color" id="canvas-color" value="#ffffff" /><br>
 
 	<input type="button" id="clearcanvas" value="clear"><br>
 
@@ -35,6 +38,7 @@
 	var clickCounter=new Array();
 	var brushSize = new Array();
 	var brushColor = new Array();;
+	var canvasColor = document.getElementById('canvas-color').value;
 	var paint;
 
 	function addClick(x,y,counter){
@@ -47,6 +51,8 @@
 
 	function redraw(){
 		context.clearRect(0,0,context.canvas.width,context.canvas.height);
+		context.fillStyle = canvasColor;
+   context.fillRect(0,0,canvas.width,canvas.height);
 		context.lineJoin="round";
 		context.lineCap="round";
 		context.lineWidth=1;
@@ -101,6 +107,11 @@
 	
 	document.getElementById('brush-size-slider').onchange = function () {
 	  document.getElementById('brush-size').value = this.value;
+  }
+  
+  document.getElementById('canvas-color').onchange = function () {
+    canvasColor = this.value;
+    redraw();
   }
 
     //for save the image
