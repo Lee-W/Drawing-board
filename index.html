@@ -17,10 +17,16 @@
   <input type="number" id="brush-size" min="1" max="999" value="10" /><br>
 
 	<label for="brush-color">Brush color:</label>
-	<input type="color" id="brush-color" value="#000000" /><br>
+	<input type="color" id="brush-color" value="#000000" /><br><br>
 
   <label for="canvas-color">Canvas color:</label>
-  <input type="color" id="canvas-color" value="#ffffff" /><br>
+  <input type="color" id="canvas-color" value="#ffffff" /><br><br>
+
+  <label for="eraser-size">Eraser size:</label>
+  <input type="range" id="eraser-size-slider" min="1" max="200" step="1" value="10" />
+  <input type="number" id="eraser-size" min="1" max="999" value="10" /><br>
+
+  <input type="checkbox" id="eraser-cb" />Use eraser<br><br>
 
 	<input type="button" id="clearcanvas" value="clear"><br>
 
@@ -45,8 +51,13 @@
 		clickX.push(x);
 		clickY.push(y);
 		clickCounter.push(counter);
-		brushSize.push(document.getElementById('brush-size').value);
-		brushColor.push(document.getElementById('brush-color').value);
+		if (document.getElementById('eraser-cb').checked) {
+      brushSize.push(document.getElementById('eraser-size').value);
+		   brushColor.push("canvasColor");
+   } else {
+      brushSize.push(document.getElementById('brush-size').value);
+      brushColor.push(document.getElementById('brush-color').value);
+    }
 	}
 
 	function redraw(){
@@ -66,7 +77,11 @@
 			context.lineTo(clickX[i],clickY[i]);
 			context.closePath();
 			context.lineWidth = brushSize[i];
-			context.strokeStyle = brushColor[i];
+    if (brushColor[i] === 'canvasColor') {
+      context.strokeStyle = canvasColor;
+    } else {
+  			context.strokeStyle = brushColor[i];
+    }
 			context.stroke();
 		}
 	}
@@ -107,6 +122,10 @@
 	
 	document.getElementById('brush-size-slider').onchange = function () {
 	  document.getElementById('brush-size').value = this.value;
+  }
+  
+  document.getElementById('eraser-size-slider').onchange = function () {
+	  document.getElementById('eraser-size').value = this.value;
   }
   
   document.getElementById('canvas-color').onchange = function () {
