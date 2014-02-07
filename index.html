@@ -13,7 +13,8 @@
 </div>
 <div id="toolBox">
     <label for="brush-size">Brush size:</label>
-    <input type="number" id="brush-size" min="1" value="10" /><br>
+    <input type="range" id="brush-size-slider" min="1" max="200" step="1" value="10" />
+    <input type="number" id="brush-size" min="1" max="999" value="10" /><br>
 
 	<label for="brush-color">Brush color:</label>
 	<input type="color" id="brush-color" /><br>
@@ -97,6 +98,10 @@
 		brushColor = [];
 		redraw();
 	}
+	
+	document.getElementById('brush-size-slider').onchange = function () {
+	  document.getElementById('brush-size').value = this.value;
+  }
 
     //for save the image
     var image = document.getElementById('image');
